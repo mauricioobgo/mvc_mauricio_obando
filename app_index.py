@@ -1,7 +1,10 @@
 from flask import Flask,render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_,and_
 from api_consumption import *
+import logging
 import os
+logging.basicConfig(level=logging.DEBUG)
 #Init app
 app=Flask(__name__)
 basedir=os.path.abspath(os.path.dirname(__file__))
@@ -18,11 +21,23 @@ import db.comments
 def index():
     if(request.method=='POST'):
         validateInfoUser=request.form['user_name_id']
+        paswword_validation=request.form['pass_word']
         if(validateInfoUser!= ""):
+            #para creación de Usuario
+            # user_validate = db.user.User(username=validateInfoUser)
             try:
-                validator=database.session.query(db.user.User.id_user==validateInfoUser).all()
+                app.logger.info(str(validateInfoUser))
+                #validator=db.user.User.query.filter_by(and_(db.user.User.username.like('%'+str(validateInfoUser)+'%'),db.user.User.password==str(paswword_validation))).all()
+                validator = database.session.query(db.user.User.id_user).filter_by(username=validateInfoUser,password=paswword_validation).all()
+                if(len(validator)==0):
+                    app.logger.info(print("llegue"))
+                    return redirect('/',validation=True)
+                else:
+                    #retorna el id del usuario
+                    app.logger.info(validator[0][0])
+                    return redirect('/crud_books_content/')
             except:
-
+                return 'no encontró nada'
         else:
             return redirect('/')
 
@@ -32,15 +47,32 @@ def index():
 
 @app.route('/user_creator', methods=['POST','GET'])
 def create_users():
-    return render_template("user_creator.html")
+    if ( request.method=='POST'):
+        try:
+            user_name_new=request.form['user_name_new']
+            first_name_new=request.form['first_name_new']
+            last_name_new=request.form['last_name_new']
+            pass_word_new=request.form['pass_word_creator']
+            newUser=db.user.User(user_name_new,first_name_new,last_name_new,pass_word_new)
+            database.session.add(newUser)
+            database.session.commit()
+            return redirect('/user_creator')
+        except:
+            return redirect("/")
+    else:
+        return render_template("user_creator.html")
 
 @app.route('/crud_books_content', methods=['POST','GET'])
 def crud_creation_modf():
-    return render_template("crud_books_comments.html")
+    if(request.method=='POST'):
+        return render_template("crd_bk_com.html")
+    else:
+        return render_template("crd_bk_com.html")
 
 @app.route('/api_consumption', methods=['GET','POST'])
 def api_consumption_collect():
     if (request.method=="POST"):
+        search_tweet="bigdata"
         tweetSearch=api.query_search_api(search_tweet,"2020-01-01",20)
         return render_template("api_consumption.html", tweets=tweetSearch)
     else:

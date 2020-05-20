@@ -9,6 +9,7 @@ class User(database.Model):
         last_name=Column(String(400),nullable=False)
         password=Column(String(300),nullable=False)
         date_created=Column(DateTime,default=datetime.utcnow())
+
         def __init__(self,username,first_name,last_name,password):
             self.username=username
             self.first_name=first_name

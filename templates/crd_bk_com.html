@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+
 {% block head %}
 <h1>Book Review</h1>
 {% endblock %}
+
 {% block body %}
 <div class="content">
-    <h1>Book Keeping</h1>
     <table>
         <tr>
             <th>title</th>
@@ -20,8 +21,11 @@
                 <a href="">Update</a>
             </td>
         </tr>
-        <form action="/"method="POST">
+        <form class="form-container" action="/"method="POST">
+            <div class="form-group">
+                <label for=""></label>
             <input type="text" name="title_book" id="title_book">
+            </div>
             <input type="text" name="publication_date_book" id="publication_date_insert">
             <input type="text" name="comments_insert" id="comments_insert">
         </form>

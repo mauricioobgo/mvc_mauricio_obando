@@ -5,25 +5,26 @@
 <section class="container-fluid">
     <section class="row justify-content-center">
         <section class="col-12 col-sm-6 col-md-3">
-                 <form class="form-container" action="/" method="POST">
+                 <form class="form-container" action="/user_creator" method="POST">
                       <div class="form-group">
                             <label for="name_of_user">User Name</label>
-                            <input type="text" class="form-control " id="user_name_new" aria-describedby="user name" placeholder="create user name">
+                            <input type="text" class="form-control" name="user_name_new" id="user_name_new" aria-describedby="user name" placeholder="create user name">
                       </div>
                      <div class="form-group">
                             <label for="first Name">First Name </label>
-                            <input type="text" class="form-control " id="first_name"  placeholder="First Name">
+                            <input type="text" class="form-control" name="first_name_new" id="first_name_new"  placeholder="First Name">
                       </div>
                      <div class="form-group">
                             <label for="las_name">Last Name</label>
-                            <input type="text" class="form-control " id="last_name" placeholder="Last Name">
+                            <input type="text" class="form-control" name="last_name_new" id="last_name_new" placeholder="Last Name">
                       </div>
 
                       <div class="form-group">
                             <label for="pass_word_creator">Password</label>
-                            <input type="password" class="form-control" id="pass_word_creator" placeholder="Password">
+                            <input type="password" class="form-control"  name="pass_word_creator" id="pass_word_creator" placeholder="Password">
                       </div>
                       <button type="submit" class="btn btn-primary btn-block">Submit</button>
+
                 </form>
             </section>
         </section>

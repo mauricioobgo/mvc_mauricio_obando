@@ -14,12 +14,14 @@
                       </div>
                       <div class="form-group">
                             <label for="pass_word">Password</label>
-                            <input type="password" class="form-control" id="pass_word" placeholder="Password">
+                            <input type="password" class="form-control" name="pass_word" id="pass_word" placeholder="Password">
                       </div>
                      <a href="/user_creator.html">Si eres nuevo Resgitrate aquí</a>
 
                      <button type="submit" class="btn btn-primary btn-block">Submit</button>
-
+                     {% if validation %}
+                        <label >Debes registrarte primero</label>
+                     {% endif %}
                 </form>
             </section>
         </section>
