@@ -7,6 +7,7 @@ import logging
 import os
 logging.basicConfig(level=logging.DEBUG)
 #Init app
+#falta terminación app
 app=Flask(__name__)
 basedir=os.path.abspath(os.path.dirname(__file__))
 #DataBase
