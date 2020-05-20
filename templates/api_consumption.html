@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block head %}
+<h1>Book Review</h1>
+{% endblock %}
+{% block body %}
+<div class="content">
+    <h1>Book Keeping</h1>
+    <table>
+        <tr>
+            <th>User Screen Name</th>
+            <th>User Location</th>
+            <th>Tweet</th>
+        </tr>
+        {% for tweet in tweets %}
+            <tr>
+                <td>{{ tweet.user.screen_name }}</td>
+                <td>{{ tweet.user.location }}</td>
+                <td>{{ tweet.text }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+{% endblock %}
