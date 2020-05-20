@@ -5,10 +5,10 @@ class api_consumption():
 
 
     def __init__(self):
-        consumer_key = 'SpC8t4fTuwY9JUSMP24GEqz2q'
-        consumer_secret = 'fwnC15x2Ts35quo5Hc0LW1atQIlQ9jcwhTW6s6dKdor7Vrbsvq'
-        access_token_key = '750495828-qZSbCVvsAgcvuz6jaNssog82B0wmgAgcS28A3Amo'
-        access_token_secret = 'HCDmltDx24AMumS2DvA3UZLNTJX9HfujVI2mtApIeexS2'
+        consumer_key = ''
+        consumer_secret = ''
+        access_token_key = ''
+        access_token_secret = ''
         auth= tw.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token_key, access_token_secret)
         self.api= tw.API(auth, wait_on_rate_limit=True)
