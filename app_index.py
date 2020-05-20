@@ -18,6 +18,7 @@ api=api_consumption()
 import db.book
 import db.user
 import db.comments
+user_final_id=2
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if(request.method=='POST'):
@@ -35,7 +36,7 @@ def index():
                     return redirect('/',validation=True)
                 else:
                     #retorna el id del usuario
-                    app.logger.info(validator[0][0])
+                    user_final_id=validator[0][0]
                     return redirect('/crud_books_content/')
             except:
                 return 'no encontró nada'
@@ -74,9 +75,15 @@ def crud_creation_modf():
             new_book_add = db.book.Book(new_book_title,new_book_publication_date)
             database.session.add(new_book_add)
             database.session.commit()
+            last_id = database.session.query(db.book.Book.id_book).order_by(db.book.Book.id_book.desc()).first()
+            last_id=last_id[0]
+            new_coment=db.comments.Comments(last_id,request.form['comments_insert'],user_final_id)
+            database.session.add(new_coment)
+            database.session.commit()
             database.session.close()
-            last_id=database.session.query(db.book.Book.id_book).orderby()
 
+
+            app.logger.info(last_id)
             return redirect('/crud_books_content')
         #except:
          #   return redirect("/")
