@@ -1,5 +1,6 @@
 from flask import Flask,render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 from sqlalchemy import or_,and_
 from api_consumption import *
 import logging
@@ -26,9 +27,9 @@ def index():
             #para creación de Usuario
             # user_validate = db.user.User(username=validateInfoUser)
             try:
-                app.logger.info(str(validateInfoUser))
                 #validator=db.user.User.query.filter_by(and_(db.user.User.username.like('%'+str(validateInfoUser)+'%'),db.user.User.password==str(paswword_validation))).all()
                 validator = database.session.query(db.user.User.id_user).filter_by(username=validateInfoUser,password=paswword_validation).all()
+                database.session.close()
                 if(len(validator)==0):
                     app.logger.info(print("llegue"))
                     return redirect('/',validation=True)
@@ -56,6 +57,7 @@ def create_users():
             newUser=db.user.User(user_name_new,first_name_new,last_name_new,pass_word_new)
             database.session.add(newUser)
             database.session.commit()
+            database.session.close()
             return redirect('/user_creator')
         except:
             return redirect("/")
@@ -65,7 +67,19 @@ def create_users():
 @app.route('/crud_books_content', methods=['POST','GET'])
 def crud_creation_modf():
     if(request.method=='POST'):
-        return render_template("crd_bk_com.html")
+        #try:
+            new_book_title = request.form['title_book']
+            new_book_publication_date=request.form['publication_date_book']
+            new_book_publication_date=datetime.strptime(new_book_publication_date,'%Y-%m-%d')
+            new_book_add = db.book.Book(new_book_title,new_book_publication_date)
+            database.session.add(new_book_add)
+            database.session.commit()
+            database.session.close()
+            last_id=database.session.query(db.book.Book.id_book).orderby()
+
+            return redirect('/crud_books_content')
+        #except:
+         #   return redirect("/")
     else:
         return render_template("crd_bk_com.html")
 

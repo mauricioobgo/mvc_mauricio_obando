@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, Column, Integer, String, ForeignKey,DateTi
 from app_index import  database
 
 class Book(database.Model):
-    id_book = Column(Integer, primary_key=True)
+    id_book = Column(Integer, primary_key=True,nullable=False)
     title = Column(String(400), nullable=False)
     publication_date = Column(DateTime, nullable=False)
     date_created = Column(DateTime, default=datetime.utcnow())
